@@ -145,6 +145,7 @@ shot("11_offline_library")
 log(f"media session offline: {media_state()}")
 tap("^Home$", label="Home tab (offline)")
 time.sleep(3)
+log(f"offline banner shown: {bool(find('Offline', wait=10))}")
 shot("12_offline_home")
 sh("adb shell cmd connectivity airplane-mode disable"); sh("adb shell svc wifi enable"); sh("adb shell svc data enable")
 
