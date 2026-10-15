@@ -1,0 +1,49 @@
+== install ==
+Performing Streamed Install
+Success
+home loaded: True
+screenshot 01_home
+== play ==
+tapped 'hero Play' at (267, 760)
+screenshot 02_playing_mini
+media session: [('PLAYING', '3', '11853'), ('ERROR', '7', '0'), ('ERROR', '7', '0'), ('ERROR', '7', '0'), ('ERROR', '7', '0'), ('NONE', '0', '0'), ('NONE', '0', '0'), ('ERROR', '7', '0')]
+media session after 5s: [('PLAYING', '3', '14858'), ('ERROR', '7', '0'), ('ERROR', '7', '0'), ('ERROR', '7', '0'), ('ERROR', '7', '0'), ('NONE', '0', '0'), ('NONE', '0', '0'), ('ERROR', '7', '0')]
+== player ==
+tapped 'mini player' at (540, 2021)
+screenshot 03_player
+== download from player ==
+tapped 'download button' at (829, 1644)
+download completed: True
+screenshot 04_player_downloaded
+== queue ==
+tapped 'queue' at (954, 212)
+screenshot 05_queue
+== notification shade ==
+screenshot 06_notification
+== library ==
+tapped 'Library tab' at (907, 2274)
+screenshot 07_library
+== search ==
+tapped 'Search tab' at (540, 2274)
+tapped 'search field' at (527, 359)
+screenshot 08_search
+== collection ==
+tapped 'Home tab' at (172, 2274)
+tapped 'Raga Mornings playlist' at (961, 1013)
+screenshot 09_collection
+== details sheet ==
+tapped 'sources' at (880, 212)
+screenshot 10_sources
+== offline mode ==
+tapped 'Library tab (offline)' at (907, 2274)
+tapped 'Play all downloads offline' at (238, 943)
+screenshot 11_offline_library
+media session offline: [('PLAYING', '3', '5884'), ('NONE', '0', '0'), ('NONE', '0', '0'), ('ERROR', '7', '0')]
+tapped 'Home tab (offline)' at (172, 2274)
+offline banner shown: True
+screenshot 12_offline_home
+== background playback ==
+media session in background: [('PLAYING', '3', '20771'), ('NONE', '0', '0'), ('NONE', '0', '0'), ('ERROR', '7', '0'), ('ERROR', '7', '0'), ('ERROR', '7', '0')]
+screenshot 13_lockscreen
+media session while locked: [('PLAYING', '3', '26771'), ('NONE', '0', '0'), ('NONE', '0', '0'), ('ERROR', '7', '0'), ('ERROR', '7', '0'), ('ERROR', '7', '0')]
+crash buffer lines: 0
