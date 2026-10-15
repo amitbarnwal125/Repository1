@@ -1,0 +1,68 @@
+name: build-apk
+on:
+  push:
+    branches: [bollywood-music-app]
+    paths: ['SwaraMusic/**', '.github/workflows/android.yml', 'tools/smoke_test.py']
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      VERSION_CODE: ${{ github.run_number }}
+      VERSION_NAME: 1.0.${{ github.run_number }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Build release APK
+        id: build
+        working-directory: SwaraMusic
+        run: |
+          mkdir -p ../out
+          chmod +x gradlew
+          set -o pipefail
+          ./gradlew assembleRelease --stacktrace 2>&1 | tee ../out/build.log
+          cp app/build/outputs/apk/release/app-release.apk ../out/Swara.apk
+      - name: Enable KVM
+        if: steps.build.outcome == 'success'
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Emulator smoke test
+        id: smoke
+        if: steps.build.outcome == 'success'
+        continue-on-error: true
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -no-boot-anim -camera-back none
+          script: python3 tools/smoke_test.py out/Swara.apk
+      - name: Publish logs and screenshots
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p out
+          echo "build=${{ steps.build.outcome }} smoke=${{ steps.smoke.outcome }} run=${{ github.run_number }}" > out/status.txt
+          tools/publish_logs.sh out
+      - name: Publish GitHub release
+        if: steps.build.outcome == 'success' && contains(github.event.head_commit.message, '[release]')
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="swara-v1.0.${{ github.run_number }}"
+          gh release create "$TAG" out/Swara.apk \
+            --target "${{ github.sha }}" \
+            --title "Swara 1.0.${{ github.run_number }} — free & legal Indian music (Android)" \
+            --notes-file SwaraMusic/RELEASE_NOTES.md \
+            --latest
