@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Original mark: a stylised sound wave inside a lotus-like ring -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <path android:fillColor="#00000000" android:strokeColor="#FFFFF3E0" android:strokeWidth="3"
+        android:pathData="M54,30 C66,38 72,46 72,56 C72,66 64,74 54,74 C44,74 36,66 36,56 C36,46 42,38 54,30 Z" />
+    <path android:fillColor="#FFFFF3E0" android:pathData="M45,49h3v14h-3z" />
+    <path android:fillColor="#FFFFF3E0" android:pathData="M50,44h3v24h-3z" />
+    <path android:fillColor="#FFFFF3E0" android:pathData="M55,47h3v18h-3z" />
+    <path android:fillColor="#FFFFF3E0" android:pathData="M60,51h3v10h-3z" />
+</vector>
