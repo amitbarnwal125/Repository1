@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: python3 tools/probe_commons.py > probe.txt 2>&1 || true
+      - run: python3 tools/probe2.py > probe.txt 2>&1 || true
       - name: Publish probe output to ci-logs branch
         run: |
           git config user.name "ci-bot"; git config user.email "ci-bot@users.noreply.github.com"
