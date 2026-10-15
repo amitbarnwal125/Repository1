@@ -37,11 +37,11 @@ class MusicRepository(
         if (!jamendo.isConfigured) emptyList() else cached("jamendo-popular") { jamendo.popularIndian() }
 
     fun curatedPlaylists(): List<Collection> = Catalog.playlists.map {
-        Collection("pl:${it.id}", it.title, it.subtitle, Collection.Kind.PLAYLIST).also(::remember)
+        Collection("pl:${it.id}", it.title, it.subtitle, Collection.Kind.PLAYLIST).also { remember(it) }
     }
 
     fun commonsCollections(): List<Collection> = Catalog.categories.map {
-        Collection("cat:${it.category}", it.title, it.subtitle, Collection.Kind.CATEGORY).also(::remember)
+        Collection("cat:${it.category}", it.title, it.subtitle, Collection.Kind.CATEGORY).also { remember(it) }
     }
 
     /** Albums from Jamendo popular tracks (if configured). */
@@ -50,7 +50,7 @@ class MusicRepository(
         .distinctBy { it.albumId }
         .take(12)
         .map {
-            Collection("jalbum:${it.albumId}", it.album!!, it.artist, Collection.Kind.ALBUM, it.artworkUrl).also(::remember)
+            Collection("jalbum:${it.albumId}", it.album!!, it.artist, Collection.Kind.ALBUM, it.artworkUrl).also { remember(it) }
         }
 
     /** Artists derived from what has been loaded, most tracks first. */
@@ -63,7 +63,7 @@ class MusicRepository(
         .map { (id, list) ->
             val first = list.first()
             Collection(id, first.artist, "${list.size} track${if (list.size == 1) "" else "s"} · ${first.sourceType.label}",
-                Collection.Kind.ARTIST, first.artworkUrl).also(::remember)
+                Collection.Kind.ARTIST, first.artworkUrl).also { remember(it) }
         }
 
     fun remember(c: Collection) { collections[c.id] = c }

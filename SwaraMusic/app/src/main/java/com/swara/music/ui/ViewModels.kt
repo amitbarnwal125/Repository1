@@ -113,7 +113,7 @@ class SearchViewModel(private val c: AppContainer) : ViewModel() {
     val results: StateFlow<Loadable<List<Track>>?> =
         combine(query.debounce(350), filter, c.network.online) { q, f, on -> Triple(q, f, on) }
             .flatMapLatest { (q, f, on) ->
-                if (q.isBlank()) flowOf(null) else flow {
+                if (q.isBlank()) flowOf<Loadable<List<Track>>?>(null) else flow<Loadable<List<Track>>?> {
                     emit(Loadable.Loading)
                     if (!on) {
                         val local = c.downloads.completedTracks.first() + c.library.importedTracks.first()
